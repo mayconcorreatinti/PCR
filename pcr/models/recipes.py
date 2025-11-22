@@ -38,7 +38,6 @@ class Recipe(BaseModel):
         ]
     )
     serve: str | None
-    difficulty: str | None
 
 class RecipeResponse(Recipe):
     id: int
