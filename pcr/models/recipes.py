@@ -40,3 +40,24 @@ class Recipe(BaseModel):
     prep_time: str
     serve: str | None
 
+    def get_ingredients(self):
+        dict_ingredients = []
+        for ingredient in self.ingredients:
+            dict_ingredients.append(dict(ingredient))
+        return dict_ingredients
+
+    def get_instructions(self):
+        dict_instructions = []
+        for instruction in self.instructions:
+            dict_instructions.append(dict(instruction))
+        return dict_instructions
+
+class RecipeResponse(BaseModel):
+    id: int
+    user_id: int
+    name: str
+    description: str
+    ingredients: List[Ingredient]
+    instructions: List[Instruction]
+    prep_time: str
+    serve: str | None

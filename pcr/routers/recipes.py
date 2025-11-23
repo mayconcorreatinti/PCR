@@ -1,5 +1,5 @@
-from fastapi import APIRouter,Depends
-from pcr.models.recipes import Recipe
+from fastapi import APIRouter,Depends,HTTPException
+from pcr.models.recipes import Recipe,RecipeResponse
 from pcr.database import CRUDRecipes,CRUDIngredients,CRUDInstructions
 from pcr.security import get_current_user
 from http import HTTPStatus
@@ -16,8 +16,16 @@ def get_recipes():
     with open("pcr/recipes.json","r",encoding='utf8') as file:
         return json.load(file)
 
-@app.post("/",status_code=HTTPStatus.CREATED)
+@app.post("/",status_code=HTTPStatus.CREATED,response_model=RecipeResponse)
 async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_user)):
+    recipe_db = await manage_recipes.select_recipe_from_table(
+        (recipe.description,)
+      )
+    if recipe_db:
+      raise HTTPException(
+        status_code=HTTPStatus.CONFLICT,
+        detail="This recipe description already exists!"
+      )
     await manage_recipes.insert_recipe_into_table(
       (
         authenticated_user["id"],
@@ -27,13 +35,13 @@ async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_us
         recipe.serve,
       )
     )
-    recipe_id = await manage_recipes.select_recipeid_from_table_by_description(
+    recipe_db = await manage_recipes.select_recipe_from_table(
         (recipe.description,)
       )
     for ingredient in recipe.ingredients:
       await manage_ingredients.insert_ingredient_into_table(
         (
-          recipe_id,
+          recipe_db["id"],
           ingredient.name,
           ingredient.quantity
         )
@@ -41,9 +49,18 @@ async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_us
     for instruction in recipe.instructions:
       await manage_instructions.insert_instruction_into_table(
         (
-          recipe_id,
+          recipe_db["id"],
           instruction.step_number,
           instruction.description
         )
       )
-    return "OK"
+    return {
+      "id": recipe_db["id"],
+      "user_id": authenticated_user["id"],
+      "name": recipe.name,
+      "description": recipe.description,
+      "ingredients": recipe.get_ingredients(),
+      "instructions": recipe.get_instructions(),
+      "prep_time": recipe.prep_time,
+      "serve": recipe.serve
+    }

@@ -95,6 +95,7 @@ class CRUDUsers:
         """,data
         )
     
+    
 class CRUDRecipes:
 
     def __init__(self):
@@ -106,13 +107,20 @@ class CRUDRecipes:
         """,data
         )
     
-    async def select_recipeid_from_table_by_description(self,data):
-        response = await self.connection._query("""
-            SELECT id FROM recipe WHERE description = %s;
+    async def select_recipe_from_table(self,data):
+        recipes = await self.connection._query("""
+            SELECT id,
+                user_id,
+                name,
+                description,
+                prep_time,
+                serves 
+            FROM recipe 
+            WHERE description = %s;
         """,data
         )
-        return response[0]["id"]
-
+        for recipe in recipes:
+            return recipe
 
 class CRUDIngredients:
 
@@ -125,7 +133,6 @@ class CRUDIngredients:
         """,data
         )
 
-     
 
 class CRUDInstructions:
 
