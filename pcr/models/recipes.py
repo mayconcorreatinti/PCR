@@ -37,7 +37,6 @@ class Recipe(BaseModel):
             }
         ]
     )
+    prep_time: str
     serve: str | None
 
-class RecipeResponse(Recipe):
-    id: int
