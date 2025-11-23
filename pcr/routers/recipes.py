@@ -23,6 +23,4 @@ async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_us
         recipe.description,
         recipe.prep_time,
         recipe.serve,
-    )
-
-    
+)        

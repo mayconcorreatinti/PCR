@@ -11,9 +11,9 @@ CREATE TABLE recipe(
     id INTEGER AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
-    description VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL UNIQUE,
     prep_time VARCHAR(100) NOT NULL,
-    serves VARCHAR(30),
+    serves VARCHAR(30) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES user(id)
 ) ENGINE=InnoDB;

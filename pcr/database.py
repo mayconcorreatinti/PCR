@@ -118,6 +118,7 @@ class CRUDIngredients:
         """,data
         )
 
+     
 
 class CRUDInstructions:
 
