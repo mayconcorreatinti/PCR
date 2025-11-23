@@ -29,13 +29,13 @@ class ConnectionDB:
         )
     
     async def _query(self,query:str,data=None) -> list:
-        if not self.conn:
-            self.conn = await self._connection()
-        async with await self.conn.cursor(dictionary=True) as cursor:
+        if not self.db.conn:
+            self.db.conn = await self._connection()
+        async with await self.db.conn.cursor(dictionary=True) as cursor:
             await cursor.execute(query,data)
             response = await cursor.fetchall()
             if data:
-                await self.conn.commit()
+                await self.db.conn.commit()
             return response
 
 
@@ -105,6 +105,13 @@ class CRUDRecipes:
             INSERT INTO recipe(user_id,name,description ,prep_time,serves) VALUES (%s,%s,%s,%s,%s);
         """,data
         )
+    
+    async def select_recipeid_from_table_by_description(self,data):
+        response = await self.connection._query("""
+            SELECT id FROM recipe WHERE description = %s;
+        """,data
+        )
+        return response[0]["id"]
 
 
 class CRUDIngredients:
