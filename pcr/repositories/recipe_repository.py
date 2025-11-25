@@ -8,7 +8,12 @@ class CRUDRecipes:
     
     async def insert_recipe_into_table(self,data:tuple) -> None:
         await self.connection._query("""
-            INSERT INTO recipe(user_id,name,description ,prep_time,serves) VALUES (%s,%s,%s,%s,%s);
+            INSERT INTO recipe(
+                user_id,
+                name,
+                description,
+                prep_time,serves
+            ) VALUES (%s,%s,%s,%s,%s);
         """,data
         )
     
@@ -34,7 +39,11 @@ class CRUDIngredients:
 
     async def insert_ingredient_into_table(self,data:tuple) -> None:
         await self.connection._query("""
-            INSERT INTO ingredient(recipe_id,name,quantity) VALUES (%s,%s,%s);
+            INSERT INTO ingredient(
+                recipe_id,
+                name,
+                quantity
+            ) VALUES (%s,%s,%s);
         """,data
         )
 
@@ -46,7 +55,11 @@ class CRUDInstructions:
 
     async def insert_instruction_into_table(self,data:tuple) ->None:
         await self.connection._query("""
-            INSERT INTO Instruction(recipe_id,step_number,description) VALUES (%s,%s,%s);
+            INSERT INTO Instruction(
+                recipe_id,
+                step_number,
+                description
+            ) VALUES (%s,%s,%s);
         """,data
         )
          

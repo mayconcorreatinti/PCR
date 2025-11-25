@@ -36,7 +36,11 @@ class CRUDUsers:
     
     async def insert_user_into_table(self,data:tuple) -> None:
         await self.connection._query("""
-            INSERT INTO user(username,email,password)
+            INSERT INTO user(
+                username,
+                email,
+                password
+            )
             VALUES (%s,%s,%s);
             """,data
         )

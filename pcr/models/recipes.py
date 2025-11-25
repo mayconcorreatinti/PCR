@@ -61,3 +61,6 @@ class RecipeResponse(BaseModel):
     instructions: List[Instruction]
     prep_time: str
     serve: str | None
+
+class Recipes(BaseModel):
+    recipes: List[RecipeResponse]

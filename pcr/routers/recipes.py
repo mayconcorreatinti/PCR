@@ -1,9 +1,9 @@
 from fastapi import APIRouter,Depends,HTTPException
-from pcr.models.recipes import Recipe,RecipeResponse
+from pcr.models.recipes import Recipe,RecipeResponse,Recipes
 from pcr.repositories.recipe_repository import (
   CRUDRecipes,CRUDIngredients,CRUDInstructions
 )
-from pcr.security import get_current_user
+from pcr.security_service import get_current_user
 from http import HTTPStatus
 import json
 
@@ -13,10 +13,10 @@ manage_recipes = CRUDRecipes()
 manage_ingredients = CRUDIngredients()
 manage_instructions = CRUDInstructions()
 
-@app.get("/")
+@app.get("/",response_model=Recipes)
 def get_recipes():
     with open("pcr/recipes.json","r",encoding='utf8') as file:
-        return json.load(file)
+      return {"recipes":json.load(file)}
 
 @app.post("/",status_code=HTTPStatus.CREATED,response_model=RecipeResponse)
 async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_user)):

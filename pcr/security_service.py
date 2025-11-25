@@ -1,5 +1,5 @@
 from pwdlib import PasswordHash 
-from pcr.database import CRUDUsers
+from pcr.repositories.user_repository import CRUDUsers
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends,HTTPException

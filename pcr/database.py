@@ -16,20 +16,20 @@ class MysqlConnection:
 
     async def _connection(self):
         return await connect(
-            user = self.db._user,
-            password = self.db._password,
-            host = self.db._host,
-            database = self.db._database
+            user = self._user,
+            password = self._password,
+            host = self._host,
+            database = self._database
         )
     
     async def _query(self,query:str,data=None) -> list:
-        if not self.db.conn:
-            self.db.conn = await self._connection()
-        async with await self.db.conn.cursor(dictionary=True) as cursor:
+        if not self.conn:
+            self.conn = await self._connection()
+        async with await self.conn.cursor(dictionary=True) as cursor:
             await cursor.execute(query,data)
             response = await cursor.fetchall()
             if data:
-                await self.db.conn.commit()
+                await self.conn.commit()
             return response
 
 

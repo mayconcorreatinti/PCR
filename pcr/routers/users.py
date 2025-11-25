@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pcr.models.users import User,UserResponse,Token,Message,Users
 from pcr.repositories.user_repository import CRUDUsers
 from http import HTTPStatus
-from pcr.security import (
+from pcr.security_service import (
     hash,verify_password,create_access_token,get_current_user,verify_credentials
 )
 from typing import Annotated

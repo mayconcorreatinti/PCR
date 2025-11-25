@@ -1,44 +1,77 @@
 [
     {
-        "title":"bolo de chocolate",
+        "id": 1,
+        "user_id": 1,
+        "name":"bolo de chocolate",
         "description":"Quando se trata de uma sobremesa clássica e deliciosa, poucas opções são tão tentadoras quanto um bom bolo de chocolate. Esta receita simples e fácil de preparar é a solução perfeita para satisfazer aquele desejo por um doce delicioso. ",
         "ingredients":[
-            {"ingredient 1": "ovos","quantity":"3 unidades"},
-            {"ingredient 2": "farinha de trigo","quantity":"2 xícaras(chá)"},
-            {"ingredient 3": "óleo","quantity":"1/2 xícara (cha) de óleo"},
-            {"ingredient 4": "sal","quantity":"1 pitada"},
-            {"ingredient 5": "açúcar","quantity":"1 e 1/2 xídcara (chá) + 1 xícara (chá) "},
-            {"ingredient 6": "chocolate em pó","quantity":"1 xícara (chá) + 1/2 xícara (chá)"},
-            {"ingredient 7": "fermento em pó","quantity":"1 colher (sopa)"},
-            {"ingredient 8": "água quente","quantity":"1 xícara (chá)"},
-            {"ingredient 9": "leite","quantity":"4 colheres (sopa)"},
-            {"ingredient 10": "manteiga","quantity":"1 colher (sopa)"}
+            {
+                "name": "ovos",
+                "quantity":"3 unidades"
+            },
+            {
+                "name": "farinha de trigo",
+                "quantity":"2 xícaras(chá)"
+            },
+            {
+                "name": "óleo",
+                "quantity":"1/2 xícara (cha) de óleo"
+            },
+            {
+                "name": "sal",
+                "quantity":"1 pitada"
+            },
+            {
+                "name": "açúcar",
+                "quantity":"1 e 1/2 xídcara (chá) + 1 xícara (chá) "
+            },
+            {
+                "name": "chocolate em pó",
+                "quantity":"1 xícara (chá) + 1/2 xícara (chá)"
+            },
+            {
+                "name": "fermento em pó",
+                "quantity":"1 colher (sopa)"
+            },
+            {
+                "name": "água quente",
+                "quantity":"1 xícara (chá)"
+            },
+            {
+                "name": "leite","quantity":"4 colheres (sopa)"
+            },
+            {
+                "name": "manteiga","quantity":"1 colher (sopa)"
+            }
         ],
         "instructions":[
-            {"instruction 1": "Massa - Em um liquidificador, bata os ovos, o açúcar, o óleo, o achocolatado e a farinha de trigo."},
-            {"instruction 2": "Despeje a massa em uma tigela e adicione a água quente e o fermento, misturando bem."},
-            {"instruction 3": "Despeje a massa em uma forma untada e asse em forno médio-alto (200° C), preaquecido, por 40 minutos."},
-            {"instruction 4": "Desenforme ainda quente"},
-            {"instruction 5": "cobertura - Em uma panela, leve todos os ingredientes ao fogo até levantar fervura."},
-            {"instruction 6": "Despeje ainda quente em cima do bolo."}
+            {
+                "step_number": 1,
+                "description": "Massa - Em um liquidificador, bata os ovos, o açúcar, o óleo, o achocolatado e a farinha de trigo."
+            },
+            {
+                "step_number": 2,
+                "description": "Despeje a massa em uma tigela e adicione a água quente e o fermento, misturando bem."
+            },
+            {
+                "step_number": 3,
+                "description": "Despeje a massa em uma forma untada e asse em forno médio-alto (200° C), preaquecido, por 40 minutos."
+            },
+            {
+                "step_number": 4, 
+                "description": "Desenforme ainda quente"
+            },
+            {
+                "step_number": 5, 
+                "description": "cobertura - Em uma panela, leve todos os ingredientes ao fogo até levantar fervura."
+            },
+            {
+                "step_number": 6, 
+                "description": "Despeje ainda quente em cima do bolo."
+            }
         ],  
-        "yield":"8 a 12 pessoas",
-        "difficulty":"Difícil"
-    },
-    {
-        "title":"pão com margarina",
-        "description":"um pãozinho gostoso para o café da manhã",
-        "ingredients":[
-            {"ingredient 1":"pão","quantity":"1 unidade"},
-            {"ingredient 2":"margarina","quantity":"15 gramas"}
-        ],
-        "instructions":[
-            {"instruction 1": "abrir o pão com uma faca"},
-            {"instruction 2": "abrir o pote de margarina"},
-            {"instruction 3": "passar a margarina no pão"}
-        ],
-        "yield":"1 pessoa",
-        "difficulty":"Fácil"
+        "serve":"8 a 12 pessoas",
+        "prep_time":"..."
     }
 ]
     
