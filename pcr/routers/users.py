@@ -1,7 +1,7 @@
 from fastapi import APIRouter,HTTPException,Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from pcr.models.users import User,UserResponse,Token,Message,Users
-from pcr.database import CRUDUsers
+from pcr.repositories.user_repository import CRUDUsers
 from http import HTTPStatus
 from pcr.security import (
     hash,verify_password,create_access_token,get_current_user,verify_credentials

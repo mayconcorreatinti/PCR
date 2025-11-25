@@ -1,6 +1,8 @@
 from fastapi import APIRouter,Depends,HTTPException
 from pcr.models.recipes import Recipe,RecipeResponse
-from pcr.database import CRUDRecipes,CRUDIngredients,CRUDInstructions
+from pcr.repositories.recipe_repository import (
+  CRUDRecipes,CRUDIngredients,CRUDInstructions
+)
 from pcr.security import get_current_user
 from http import HTTPStatus
 import json
@@ -19,7 +21,7 @@ def get_recipes():
 @app.post("/",status_code=HTTPStatus.CREATED,response_model=RecipeResponse)
 async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_user)):
     recipe_db = await manage_recipes.select_recipe_from_table(
-        (recipe.description,)
+        ("description",recipe.description)
       )
     if recipe_db:
       raise HTTPException(
@@ -36,7 +38,7 @@ async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_us
       )
     )
     recipe_db = await manage_recipes.select_recipe_from_table(
-        (recipe.description,)
+        ("description",recipe.description)
       )
     for ingredient in recipe.ingredients:
       await manage_ingredients.insert_ingredient_into_table(
