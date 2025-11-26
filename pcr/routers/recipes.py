@@ -40,22 +40,18 @@ async def post_recipe(recipe: Recipe,authenticated_user = Depends(get_current_us
     recipe_db = await manage_recipes.select_recipe_from_table(
         ("description",recipe.description)
       )
-    for ingredient in recipe.ingredients:
-      await manage_ingredients.insert_ingredient_into_table(
-        (
-          recipe_db["id"],
-          ingredient.name,
-          ingredient.quantity
-        )
+    await manage_ingredients.insert_ingredient_into_table(
+      (
+        recipe_db["id"],
+        recipe.ingredients
       )
-    for instruction in recipe.instructions:
-      await manage_instructions.insert_instruction_into_table(
-        (
-          recipe_db["id"],
-          instruction.step_number,
-          instruction.description
-        )
+    )
+    await manage_instructions.insert_instruction_into_table(
+      (
+        recipe_db["id"],
+        recipe.instructions
       )
+    )
     return {
       "id": recipe_db["id"],
       "user_id": authenticated_user["id"],

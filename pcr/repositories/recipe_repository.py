@@ -1,4 +1,5 @@
 from pcr.database import MysqlConnection
+from pcr.models.recipes import Ingredient,Instruction
 
 
 class CRUDRecipes:
@@ -37,15 +38,20 @@ class CRUDIngredients:
     def __init__(self):
         self.connection = MysqlConnection()
 
-    async def insert_ingredient_into_table(self,data:tuple) -> None:
-        await self.connection._query("""
-            INSERT INTO ingredient(
-                recipe_id,
-                name,
-                quantity
-            ) VALUES (%s,%s,%s);
-        """,data
-        )
+    async def insert_ingredient_into_table(self,recipeid,ingredients:list[Ingredient]) -> None:
+        for ingredient in ingredients:
+            await self.connection._query("""
+                INSERT INTO ingredient(
+                    recipe_id,
+                    name,
+                    quantity
+                ) VALUES (%s,%s,%s);
+            """,(
+                    recipeid,
+                    ingredient.name,
+                    ingredient.quantity
+                )
+            )
 
 
 class CRUDInstructions:
@@ -53,13 +59,18 @@ class CRUDInstructions:
     def __init__(self):
         self.connection = MysqlConnection()
 
-    async def insert_instruction_into_table(self,data:tuple) ->None:
-        await self.connection._query("""
-            INSERT INTO Instruction(
-                recipe_id,
-                step_number,
-                description
-            ) VALUES (%s,%s,%s);
-        """,data
-        )
+    async def insert_instruction_into_table(self,recipeid,instructions:list[Instruction]) ->None:
+        for instruction in instructions:
+            await self.connection._query("""
+                INSERT INTO Instruction(
+                    recipe_id,
+                    step_number,
+                    description
+                ) VALUES (%s,%s,%s);
+            """,(
+                    recipeid,
+                    instruction.step_number,
+                    instruction.description
+                )
+            )
          
