@@ -7,7 +7,7 @@ class RecipeService:
     def __init__(self):
         self.connection = MysqlConnection()
     
-    async def insert_recipe_into_table(self,data:tuple) -> None:
+    async def add_recipe(self,data:tuple) -> None:
         recipe_id = await self.connection._query("""
             INSERT INTO recipe(
                 user_id,
@@ -20,7 +20,7 @@ class RecipeService:
         )
         return recipe_id
 
-    async def insert_ingredient_into_table(self,recipeid,ingredients:list[Ingredient]) -> None:
+    async def add_ingredient(self,recipeid,ingredients:list[Ingredient]) -> None:
         for ingredient in ingredients:
             await self.connection._query("""
                 INSERT INTO ingredient(
@@ -35,7 +35,7 @@ class RecipeService:
                 )
             )
 
-    async def insert_instruction_into_table(self,recipeid,instructions:list[Instruction]) ->None:
+    async def add_instruction(self,recipeid,instructions:list[Instruction]) ->None:
         for instruction in instructions:
             await self.connection._query("""
                 INSERT INTO Instruction(

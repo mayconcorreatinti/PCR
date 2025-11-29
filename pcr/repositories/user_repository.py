@@ -6,7 +6,7 @@ class UserService:
     def __init__(self):
         self.connection = MysqlConnection()
 
-    async def select_users_from_table(self) -> dict:
+    async def get_users(self) -> dict:
         users = await self.connection._query("""
             SELECT id,
                 username,
@@ -17,7 +17,7 @@ class UserService:
         )
         return users
             
-    async def select_user_from_table(
+    async def get_conflict_user(
         self,username:str = '',email:str = ''
     ) -> dict:
         users = await self.connection._query("""
@@ -34,7 +34,7 @@ class UserService:
         for user in users:
             return user
     
-    async def insert_user_into_table(self,data:tuple) -> None:
+    async def add_user(self,data:tuple) -> None:
         await self.connection._query("""
             INSERT INTO user(
                 username,
@@ -45,13 +45,13 @@ class UserService:
             """,data
         )
     
-    async def delete_user_from_table(self,data:tuple) -> None:
+    async def delete_user(self,data:tuple) -> None:
         await self.connection._query("""
             DELETE FROM user WHERE ID = %s;
             """,data
         )
     
-    async def update_user_from_table(self,data:tuple):
+    async def update_user(self,data:tuple):
         await self.connection._query("""
             UPDATE user  SET
                 username = %s,
