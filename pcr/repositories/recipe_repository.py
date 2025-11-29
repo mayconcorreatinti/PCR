@@ -8,30 +8,18 @@ class RecipeService:
         self.connection = MysqlConnection()
     
     async def insert_recipe_into_table(self,data:tuple) -> None:
-        await self.connection._query("""
+        recipe_id = await self.connection._query("""
             INSERT INTO recipe(
                 user_id,
                 name,
                 description,
                 prep_time,serves
             ) VALUES (%s,%s,%s,%s,%s);
+            SELECT LAST_INSERT_ID();              
         """,data
         )
-    
-    async def select_recipe_from_table(self,data):
-        recipes = await self.connection._query("""
-            SELECT id,
-                user_id,
-                name,
-                description,
-                prep_time,
-                serves 
-            FROM recipe 
-            WHERE %s = %s;
-        """,data
-        )
-        for recipe in recipes:
-            return recipe
+        return recipe_id
+
 
 class CRUDIngredients:
 
