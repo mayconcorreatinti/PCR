@@ -2,7 +2,7 @@ from pcr.database import MysqlConnection
 from pcr.models.recipes import Ingredient,Instruction
 
 
-class RecipeService:
+class RecipeRepository:
 
     def __init__(self):
         self.connection = MysqlConnection()

@@ -3,18 +3,19 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pcr.models.users import User,UserResponse,Token,Message,Users
 from pcr.repositories.user_repository import CRUDUsers
 from http import HTTPStatus
-from pcr.security_service import (
+from pcr.security import (
     hash,verify_password,create_access_token,get_current_user,verify_credentials
 )
 from typing import Annotated
+from pcr.routers.dependencies import get_user_service
+from pcr.services.user_service import UserService
 
 
 app = APIRouter(tags=["users"],prefix="/users")
-manage_users = CRUDUsers()
 
 @app.get("/",response_model = Users)
-async def get_users():
-    users = await manage_users.select_users_from_table()
+async def get_users(user_service: UserService = Depends(get_user_service)):
+    users = await user_service.get_users()
     return {"users":users}
 
 @app.post("/",response_model = UserResponse)

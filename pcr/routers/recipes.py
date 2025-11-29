@@ -3,15 +3,12 @@ from pcr.models.recipes import Recipe,RecipeResponse,Recipes
 from pcr.repositories.recipe_repository import (
   CRUDRecipes,CRUDIngredients,CRUDInstructions
 )
-from pcr.services.security_service import get_current_user
+from pcr.security import get_current_user
 from http import HTTPStatus
 import json
 
 
 app = APIRouter(tags=["recipes"],prefix="/recipes")
-manage_recipes = CRUDRecipes()
-manage_ingredients = CRUDIngredients()
-manage_instructions = CRUDInstructions()
 
 @app.get("/",response_model=Recipes)
 def get_recipes():
