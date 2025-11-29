@@ -20,12 +20,6 @@ class RecipeService:
         )
         return recipe_id
 
-
-class CRUDIngredients:
-
-    def __init__(self):
-        self.connection = MysqlConnection()
-
     async def insert_ingredient_into_table(self,recipeid,ingredients:list[Ingredient]) -> None:
         for ingredient in ingredients:
             await self.connection._query("""
@@ -40,12 +34,6 @@ class CRUDIngredients:
                     ingredient.quantity
                 )
             )
-
-
-class CRUDInstructions:
-
-    def __init__(self):
-        self.connection = MysqlConnection()
 
     async def insert_instruction_into_table(self,recipeid,instructions:list[Instruction]) ->None:
         for instruction in instructions:
