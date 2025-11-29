@@ -1,7 +1,7 @@
 from pcr.database import MysqlConnection
 
 
-class CRUDUsers:
+class UserService:
 
     def __init__(self):
         self.connection = MysqlConnection()

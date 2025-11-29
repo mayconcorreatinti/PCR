@@ -3,7 +3,7 @@ from pcr.models.recipes import Recipe,RecipeResponse,Recipes
 from pcr.repositories.recipe_repository import (
   CRUDRecipes,CRUDIngredients,CRUDInstructions
 )
-from pcr.security_service import get_current_user
+from pcr.services.security_service import get_current_user
 from http import HTTPStatus
 import json
 
