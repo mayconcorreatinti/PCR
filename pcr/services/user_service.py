@@ -24,4 +24,8 @@ class UserService:
             hash(user.password)
         )
         return user_id
+    
+    async def get_user(self,email):
+        user = await self.user_repository.get_conflict_user(email=email)
+        return user
         

@@ -31,13 +31,7 @@ async def register_user(user:User,user_service: UserService = Depends(get_user_s
 async def create_token(
     form_data : Annotated[OAuth2PasswordRequestForm,Depends()]
 ):
-    user = await manage_users.select_user_from_table(email=form_data.username)
-    if not user or not verify_password(form_data.password,user["password"]):
-        raise HTTPException(
-            detail = "Incorrect username or password!",
-            status_code = HTTPStatus.FORBIDDEN
-        )
-    token = create_access_token({"sub":form_data.username})
+    token = create_access_token(form_data)
     return {
         "access_token":token,
         "token_type": "Bearer"

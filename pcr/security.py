@@ -1,7 +1,8 @@
 from pwdlib import PasswordHash 
 from pcr.repositories.user_repository import CRUDUsers
+from pcr.routers.dependencies import get_user_service
 from datetime import datetime, timedelta, timezone
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from fastapi import Depends,HTTPException
 from http import HTTPStatus
 from typing import Annotated
@@ -33,9 +34,21 @@ async def verify_credentials(username:str,email:str):
                 detail = "This email already exists!",
                 status_code = HTTPStatus.CONFLICT
             )
+        
+async def check_authentication(
+    form_data:OAuth2PasswordRequestForm,
+    user_service = Depends(get_user_service)
+):
+    user = await user_service.get_user(email=form_data.username)
+    if not user or not verify_password(form_data.password,user["password"]):
+        raise HTTPException(
+            detail = "Incorrect username or password!",
+            status_code = HTTPStatus.FORBIDDEN
+        )
 
-def create_access_token(data:dict):
-    to_encode = data.copy()
+async def create_access_token(form_data:OAuth2PasswordRequestForm):
+    await check_authentication(form_data)
+    to_encode = {"sub":form_data.username}
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
     )
