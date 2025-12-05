@@ -7,7 +7,7 @@ class RecipeRepository:
     def __init__(self):
         self.connection = MysqlConnection()
     
-    async def add_recipe(self,data:tuple) -> None:
+    async def add_recipe(self,data:tuple):
         recipe_id = await self.connection._query("""
             INSERT INTO recipe(
                 user_id,

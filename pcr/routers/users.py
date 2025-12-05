@@ -19,23 +19,12 @@ async def get_users(user_service: UserService = Depends(get_user_service)):
     return {"users":users}
 
 @app.post("/",response_model = UserResponse)
-async def register_user(account:User):
-    await verify_credentials(
-        account.username,
-        account.email
-    )
-    await manage_users.insert_user_into_table(
-        (
-            account.username,
-            account.email,
-            hash(account.password)
-        )
-    )
-    user = await manage_users.select_user_from_table(account.username)
+async def register_user(user:User,user_service: UserService = Depends(get_user_service)):
+    user_id = await user_service.add_user(user)
     return {
-        "id":user["id"],
-        "username":user["username"],
-        "email":user["email"]
+        "id":user_id,
+        "username":user.username,
+        "email":user.email
     }
 
 @app.post("/token",response_model = Token)
@@ -66,7 +55,7 @@ async def delete_user(id:int,authenticated_user = Depends(get_current_user)):
 
 @app.put("/{id}",response_model = Message)
 async def update_user(
-id:int,account:User,authenticated_user = Depends(get_current_user)
+id:int,user:User,authenticated_user = Depends(get_current_user)
 ):
     if id != authenticated_user["id"]:
         raise HTTPException(

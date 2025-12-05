@@ -34,16 +34,18 @@ class UserRepository:
         for user in users:
             return user
     
-    async def add_user(self,data:tuple) -> None:
-        await self.connection._query("""
+    async def add_user(self,data:tuple):
+        user_id = await self.connection._query("""
             INSERT INTO user(
                 username,
                 email,
                 password
             )
             VALUES (%s,%s,%s);
+            SELECT LAST_INSERT_ID();   
             """,data
         )
+        return user_id
     
     async def delete_user(self,data:tuple) -> None:
         await self.connection._query("""
